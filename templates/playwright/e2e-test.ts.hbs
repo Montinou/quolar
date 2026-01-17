@@ -1,0 +1,98 @@
+import { test, expect } from '@playwright/test'
+{{#if fixtures}}
+import { {{#each fixtures}}{{this}}{{#unless @last}}, {{/unless}}{{/each}} } from '../fixtures'
+{{/if}}
+
+/**
+ * {{name}}
+ *
+ * Generated from ticket: {{ticketId}}
+ * Description: {{description}}
+ *
+ * Acceptance Criteria:
+{{#each acceptanceCriteria}}
+ * - {{this}}
+{{/each}}
+ */
+test.describe('{{name}}', () => {
+  {{#if beforeAll}}
+  test.beforeAll(async () => {
+    // Setup
+  })
+  {{/if}}
+
+  {{#if beforeEach}}
+  test.beforeEach(async ({ page }) => {
+    {{#if baseUrl}}
+    await page.goto('{{baseUrl}}')
+    {{/if}}
+  })
+  {{/if}}
+
+  {{#each steps}}
+  test('{{this.assertion}}', async ({ page{{#if ../fixtures}}, {{#each ../fixtures}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}{{/if}} }) => {
+    {{#if this.navigate}}
+    await page.goto('{{this.navigate}}')
+    {{/if}}
+
+    {{#if this.selector}}
+    const element = page.locator('{{this.selector}}')
+    {{/if}}
+
+    {{#switch this.action}}
+    {{#case 'click'}}
+    await element.click()
+    {{/case}}
+    {{#case 'fill'}}
+    await element.fill('{{this.value}}')
+    {{/case}}
+    {{#case 'select'}}
+    await element.selectOption('{{this.value}}')
+    {{/case}}
+    {{#case 'check'}}
+    await element.check()
+    {{/case}}
+    {{#case 'hover'}}
+    await element.hover()
+    {{/case}}
+    {{#case 'press'}}
+    await page.keyboard.press('{{this.value}}')
+    {{/case}}
+    {{#case 'wait'}}
+    await page.waitForSelector('{{this.selector}}')
+    {{/case}}
+    {{#default}}
+    // Custom action: {{this.action}}
+    {{/default}}
+    {{/switch}}
+
+    {{#if this.assertion}}
+    {{#switch this.assertionType}}
+    {{#case 'visible'}}
+    await expect(element).toBeVisible()
+    {{/case}}
+    {{#case 'text'}}
+    await expect(element).toHaveText('{{this.expectedValue}}')
+    {{/case}}
+    {{#case 'value'}}
+    await expect(element).toHaveValue('{{this.expectedValue}}')
+    {{/case}}
+    {{#case 'url'}}
+    await expect(page).toHaveURL(/{{this.expectedValue}}/)
+    {{/case}}
+    {{#case 'count'}}
+    await expect(element).toHaveCount({{this.expectedValue}})
+    {{/case}}
+    {{#default}}
+    // Verify: {{this.assertion}}
+    {{/default}}
+    {{/switch}}
+    {{/if}}
+
+    {{#if this.screenshot}}
+    await page.screenshot({ path: `screenshots/{{../name}}-{{@index}}.png` })
+    {{/if}}
+  })
+
+  {{/each}}
+})

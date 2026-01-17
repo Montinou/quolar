@@ -1,0 +1,40 @@
+{
+  "name": "quolar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.6.0",
+  "description": "AI-Powered Test Automation Workflow Engine for Claude Code",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Montinou/quolar.git"
+  },
+  "author": "Montinou",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "clean": "tsc --build --clean",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint packages/*/src packages/providers/*/src",
+    "lint:fix": "eslint packages/*/src packages/providers/*/src --fix",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

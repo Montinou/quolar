@@ -1,0 +1,39 @@
+{
+  "name": "@quolar/skill",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Claude Code skill for Quolar test automation workflow",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "skill.json"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
+  "dependencies": {
+    "@quolar/core": "workspace:*",
+    "@quolar/provider-linear": "workspace:*",
+    "@quolar/provider-github": "workspace:*",
+    "@quolar/provider-playwright": "workspace:*",
+    "@quolar/provider-quoth": "workspace:*",
+    "@quolar/provider-exolar": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Montinou/quolar.git",
+    "directory": "packages/skill"
+  },
+  "license": "MIT"
+}
