@@ -13,7 +13,7 @@ Quolar orchestrates the end-to-end process of converting Linear tickets into ful
 /plugin marketplace add Montinou/quolar
 
 # Install the plugin
-/plugin install quolar
+/plugin install quolar@quolar-marketplace
 ```
 
 ### Manual Installation

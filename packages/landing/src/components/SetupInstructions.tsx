@@ -15,7 +15,7 @@ const tabs = [
       description: 'Choose your preferred installation method:',
       code: `# Option 1: Marketplace (Recommended)
 /plugin marketplace add Montinou/quolar
-/plugin install quolar
+/plugin install quolar@quolar-marketplace
 
 # Option 2: Global installation
 git clone https://github.com/Montinou/quolar.git ~/.claude/skills/quolar
