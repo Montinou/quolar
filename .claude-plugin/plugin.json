@@ -6,21 +6,6 @@
     "name": "Montinou"
   },
   "homepage": "https://github.com/Montinou/quolar",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Montinou/quolar"
-  },
-  "license": "MIT",
-  "mcpDependencies": {
-    "required": ["linear"],
-    "optional": ["quoth", "exolar"]
-  },
-  "keywords": [
-    "testing",
-    "automation",
-    "playwright",
-    "linear",
-    "e2e",
-    "self-healing"
-  ]
+  "repository": "https://github.com/Montinou/quolar",
+  "license": "MIT"
 }
