@@ -8,16 +8,20 @@ import { CodeBlock } from './ui/CodeBlock'
 const tabs = [
   {
     id: 'clone',
-    label: 'Clone Plugin',
+    label: 'Install Plugin',
     icon: Terminal,
     content: {
-      title: '1. Clone the Quolar Plugin',
-      description: 'Add Quolar to your Claude Code installation:',
-      code: `# Clone the repository
-git clone https://github.com/Montinou/quolar.git ~/.claude/plugins/quolar
+      title: '1. Install the Quolar Plugin',
+      description: 'Choose your preferred installation method:',
+      code: `# Option 1: Marketplace (Recommended)
+/plugin marketplace add Montinou/quolar
+/plugin install quolar
 
-# Or add as a submodule in your project
-git submodule add https://github.com/Montinou/quolar.git .claude-plugin/quolar`,
+# Option 2: Global installation
+git clone https://github.com/Montinou/quolar.git ~/.claude/skills/quolar
+
+# Option 3: Development mode (test locally)
+claude --plugin-dir /path/to/quolar`,
     },
   },
   {

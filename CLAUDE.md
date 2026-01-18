@@ -2,6 +2,20 @@
 
 Convert Linear tickets into self-healing Playwright E2E tests.
 
+## Installation
+
+```bash
+# Option 1: Marketplace (Recommended)
+/plugin marketplace add Montinou/quolar
+/plugin install quolar
+
+# Option 2: Global installation
+git clone https://github.com/Montinou/quolar.git ~/.claude/skills/quolar
+
+# Option 3: Development mode
+claude --plugin-dir /path/to/quolar
+```
+
 ## Quick Start
 
 ```bash
