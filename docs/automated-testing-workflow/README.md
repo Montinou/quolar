@@ -221,6 +221,12 @@ Dashboard: https://exolar.ai-innovation.site/executions/...
 
 ## Documentation
 
+### Complete Reference
+
+| Document | Description |
+|----------|-------------|
+| **[Complete Analysis](../QUOLAR-COMPLETE-ANALYSIS.md)** | **Single-source-of-truth comprehensive documentation** |
+
 ### Core Documentation
 
 | Document | Description |

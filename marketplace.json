@@ -1,0 +1,23 @@
+{
+  "name": "quolar-marketplace",
+  "version": "1.0.0",
+  "description": "Quolar AI Test Automation Plugin Marketplace",
+  "owner": {
+    "name": "Montinou",
+    "repository": "https://github.com/Montinou/quolar"
+  },
+  "plugins": [
+    {
+      "name": "quolar",
+      "source": ".",
+      "description": "AI-Powered Test Automation - Convert Linear tickets into self-healing Playwright E2E tests",
+      "version": "0.1.0",
+      "skills": ["test-ticket"],
+      "keywords": ["testing", "automation", "playwright", "linear", "e2e", "self-healing"],
+      "mcpDependencies": {
+        "required": ["linear"],
+        "optional": ["quoth", "exolar"]
+      }
+    }
+  ]
+}

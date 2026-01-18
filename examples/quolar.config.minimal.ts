@@ -8,10 +8,12 @@ import { defineConfig } from '@quolar/core'
 export default defineConfig({
   testFramework: {
     provider: 'playwright',
+    config: './playwright.config.ts',
+    testDir: './tests'
   },
 
   tickets: {
     provider: 'linear',
-    workspace: 'my-company',
-  },
+    workspace: 'my-company'
+  }
 })

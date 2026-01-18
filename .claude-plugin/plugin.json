@@ -1,0 +1,24 @@
+{
+  "name": "quolar",
+  "version": "0.1.0",
+  "description": "AI-Powered Test Automation - Convert Linear tickets into self-healing Playwright E2E tests",
+  "author": "Montinou",
+  "repository": "https://github.com/Montinou/quolar",
+  "license": "MIT",
+  "skills": [
+    "skills/test-ticket",
+    "skills/quolar-setup"
+  ],
+  "mcpDependencies": {
+    "required": ["linear"],
+    "optional": ["quoth", "exolar"]
+  },
+  "keywords": [
+    "testing",
+    "automation",
+    "playwright",
+    "linear",
+    "e2e",
+    "self-healing"
+  ]
+}
