@@ -10,7 +10,10 @@
   "plugins": [
     {
       "name": "quolar",
-      "source": ".",
+      "source": {
+        "source": "github",
+        "repo": "Montinou/quolar"
+      },
       "description": "AI-Powered Test Automation - Convert Linear tickets into self-healing Playwright E2E tests",
       "version": "0.1.0",
       "homepage": "https://github.com/Montinou/quolar",
