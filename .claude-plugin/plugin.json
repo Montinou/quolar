@@ -1,11 +1,23 @@
 {
   "name": "quolar",
-  "version": "0.1.0",
-  "description": "AI-Powered Test Automation - Convert Linear tickets into self-healing Playwright E2E tests",
+  "version": "0.2.0",
+  "description": "AI-Powered Test Automation - Convert Linear tickets into self-healing Playwright E2E tests with automatic PR creation and CI integration",
   "author": {
-    "name": "Montinou"
+    "name": "Montinou",
+    "url": "https://github.com/Montinou"
   },
   "homepage": "https://github.com/Montinou/quolar",
   "repository": "https://github.com/Montinou/quolar",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "testing",
+    "automation",
+    "playwright",
+    "e2e",
+    "linear",
+    "self-healing",
+    "test-generation",
+    "ci-cd",
+    "mcp"
+  ]
 }

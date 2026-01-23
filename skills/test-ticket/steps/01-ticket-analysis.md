@@ -1,17 +1,19 @@
 # Step 1: Ticket Analysis
 
 **Duration**: ~60 seconds
-**Purpose**: Gather ALL sources of truth about what needs to be tested.
+**Purpose**: Gather all sources of truth about what needs to be tested.
 
 ---
 
 ## Information Sources (Priority Order)
 
-1. **Linear Ticket** - Requirements and acceptance criteria
-2. **PR Description** - Implementation details and approach (CRITICAL)
-3. **Branch Code Changes** - Actual implementation to test
-4. **Quoth Documentation** - Canonical test patterns (MANDATORY)
-5. **Exolar Analytics** - Existing test coverage and flaky history
+| Priority | Source | Purpose |
+|----------|--------|---------|
+| 1 | **Linear Ticket** | Requirements and acceptance criteria |
+| 2 | **PR Description** | Implementation details (CRITICAL) |
+| 3 | **Branch Code Changes** | Actual implementation to test |
+| 4 | **Quoth Documentation** | Canonical test patterns (MANDATORY) |
+| 5 | **Exolar Analytics** | Existing coverage and flaky history |
 
 ---
 

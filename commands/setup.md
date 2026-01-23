@@ -1,64 +1,54 @@
 ---
+name: setup
 description: Interactive setup wizard for Quolar test automation. Validates MCP servers, creates config, sets up directories.
+argument-hint: ""
+allowed-tools: Read, Write, Bash(claude:*), Bash(npx:*), Bash(ls:*), Bash(mkdir:*)
+user-invocable: true
 ---
 
 # Quolar Setup Wizard
 
-You are executing the quolar-setup skill. Guide the user through first-time Quolar configuration.
+Execute the quolar-setup skill to guide first-time Quolar configuration.
 
-## Phase 1: Pre-Flight Checks
+## Quick Overview
 
-### 1.1 Check MCP Servers
+This wizard completes 5 phases:
+1. **Pre-Flight** - Verify MCP server connections
+2. **Configuration** - Create `quolar.config.ts`
+3. **Directories** - Set up required folder structure
+4. **Verification** - Test all connections
+5. **Summary** - Display completion status
 
-List connected MCP servers and verify:
-- [ ] `linear` - Required for ticket fetching
-- [ ] `quoth` - Required for pattern documentation
+## Execution Instructions
 
-### 1.2 Guide Installation If Missing
+Follow the detailed phase instructions in `${CLAUDE_PLUGIN_ROOT}/skills/quolar-setup/SKILL.md`.
 
-**Linear MCP** (requires LINEAR_API_KEY):
-```json
-// Add to ~/.claude/settings.json
-"linear": {
-  "command": "npx",
-  "args": ["-y", "@linear/mcp-server"],
-  "env": { "LINEAR_API_KEY": "lin_api_xxx" }
-}
-```
+### Phase 1: Pre-Flight Checks
 
-**Quoth MCP**:
-```bash
-claude mcp add --transport http quoth https://quoth.ai-innovation.site/api/mcp
-```
+Verify required MCP servers are connected:
+- [ ] `linear` - Required for ticket fetching (needs LINEAR_API_KEY)
+- [ ] `quoth` - Required for pattern documentation (MANDATORY per project rules)
+- [ ] `exolar` - Optional for test analytics
 
-## Phase 2: Configuration File
+If servers are missing, guide installation per the SKILL.md instructions.
 
-Check for `quolar.config.ts`. If missing, ask the user for:
-1. Linear workspace name
+### Phase 2: Configuration File
+
+Check for existing `quolar.config.ts`. If missing, gather:
+1. Linear workspace name (e.g., "attorneyshare")
 2. Test directory path (default: `./automation/playwright/tests`)
 3. Playwright config path (default: `./playwright.config.ts`)
 
-Then create the config file.
+### Phase 3: Directory Setup
 
-## Phase 3: Directory Setup
+Create required directories for test artifacts.
 
-Create required directories:
-```bash
-mkdir -p automation/playwright/tests
-mkdir -p automation/playwright/page-objects
-mkdir -p docs/test-analysis
-mkdir -p docs/test-plans
-```
+### Phase 4: Verification
 
-## Phase 4: Verification
+Test all connections by fetching sample data from each MCP server.
 
-Test connections:
-1. Fetch a sample Linear issue
-2. Search Quoth for test patterns
-3. Verify Playwright installation
+### Phase 5: Success Summary
 
-## Phase 5: Success Summary
+Display completion status with next steps.
 
-Display completion status with checkmarks for each component.
-
-Start by checking the connected MCP servers.
+Begin by listing connected MCP servers with `/mcp`.

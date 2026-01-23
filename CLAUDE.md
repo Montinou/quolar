@@ -23,29 +23,28 @@ claude --plugin-dir /path/to/quolar
 /test-ticket ENG-123       # Generate tests from ticket
 ```
 
+---
+
 ## Prerequisites
 
 ### Required MCP Servers
 
-Before using Quolar skills, ensure these MCP servers are connected:
+Before using Quolar, ensure these MCP servers are connected:
 
 ```bash
-# Check connected servers
 /mcp
 ```
 
-**Required:**
-- `linear` - Fetch ticket details, link PR to ticket
-- `quoth` - Search documentation for test patterns (MANDATORY per project rules)
-
-**Optional:**
-- `exolar` - Classify failures, query test analytics
+| Server | Status | Purpose |
+|--------|--------|---------|
+| `linear` | Required | Ticket fetching, PR linking |
+| `quoth` | Required | Pattern documentation (MANDATORY) |
+| `exolar` | Optional | Test analytics, failure classification |
 
 ### Install Missing Servers
 
 **Linear MCP** (requires LINEAR_API_KEY):
 ```json
-// Add to ~/.claude/settings.json or claude_desktop_config.json
 "linear": {
   "command": "npx",
   "args": ["-y", "@linear/mcp-server"],
@@ -53,19 +52,19 @@ Before using Quolar skills, ensure these MCP servers are connected:
 }
 ```
 
-**Quoth MCP** (OAuth - browser auth):
+**Quoth MCP** (OAuth):
 ```bash
 claude mcp add --transport http quoth https://quoth.ai-innovation.site/api/mcp
 ```
 
-**Exolar MCP** (OAuth - optional):
+**Exolar MCP** (optional):
 ```bash
 claude mcp add exolar-qa --transport http https://exolar.ai-innovation.site/api/mcp/mcp -s user
 ```
 
-### Configuration File
+### Configuration
 
-Create `quolar.config.ts` in your project root (or use `/quolar-setup`):
+Create `quolar.config.ts` in project root (or use `/quolar-setup`):
 
 ```typescript
 import { defineConfig } from '@quolar/core'
@@ -73,30 +72,27 @@ import { defineConfig } from '@quolar/core'
 export default defineConfig({
   testFramework: {
     provider: 'playwright',
-    config: './playwright.config.ts',
     testDir: './automation/playwright/tests'
   },
   tickets: {
     provider: 'linear',
     workspace: 'your-workspace'
-  },
-  documentation: {
-    provider: 'quoth'
-  },
-  analytics: {
-    provider: 'exolar'
-  },
-  workflow: {
-    maxHealingAttempts: 3
   }
 })
 ```
 
 ---
 
-## Available Skills
+## Available Components
 
-### `/test-ticket <ticket-id>`
+### Skills (User-Invocable Commands)
+
+| Skill | Usage | Purpose |
+|-------|-------|---------|
+| `/test-ticket` | `/test-ticket ENG-123` | Generate tests from Linear ticket |
+| `/quolar-setup` | `/quolar-setup` | First-time configuration wizard |
+
+#### /test-ticket
 
 Generate Playwright E2E tests from a Linear ticket.
 
@@ -106,20 +102,33 @@ Generate Playwright E2E tests from a Linear ticket.
 /test-ticket ENG-789 --skip-pr # Execute but skip PR creation
 ```
 
-**Workflow**: Analyze -> Search Quoth -> Plan -> Generate -> Execute -> CI -> PR
+**7-Step Workflow** (~15-20 minutes):
+1. **Analyze** - Fetch ticket, extract requirements
+2. **Search** - Query Quoth for patterns (MANDATORY)
+3. **Plan** - Generate test scenarios
+4. **Generate** - Create Playwright tests
+5. **Execute** - Run with auto-healing (3 attempts)
+6. **Integrate** - Update CI configuration
+7. **PR** - Create PR, test on preview
 
-See [skills/test-ticket/SKILL.md](./skills/test-ticket/SKILL.md) for full documentation.
+See [skills/test-ticket/SKILL.md](./skills/test-ticket/SKILL.md) for details.
 
-### `/quolar-setup`
+#### /quolar-setup
 
-Interactive configuration wizard for first-time setup.
+Interactive setup wizard for first-time configuration.
 
-- Validates MCP server connections
-- Creates configuration file
-- Sets up test directories
-- Verifies Linear workspace access
+**5 Phases**: Pre-Flight → Configuration → Directories → Verification → Summary
 
 See [skills/quolar-setup/SKILL.md](./skills/quolar-setup/SKILL.md) for details.
+
+### Agents (Autonomous)
+
+| Agent | Triggers On | Purpose |
+|-------|-------------|---------|
+| `test-healer` | "fix failing tests", test errors | Auto-heal test failures |
+| `failure-classifier` | "is this a flake?", failure analysis | Classify failures (FLAKE/BUG/ENV) |
+
+Agents trigger automatically when relevant context is detected.
 
 ---
 
@@ -129,8 +138,6 @@ Per project rules, Quoth MUST be consulted during the workflow:
 
 - **Step 2**: Search existing patterns before generating code
 - **Step 7**: Propose new patterns to documentation
-
-The workflow will warn if Quoth is unavailable but will still attempt to find documented patterns.
 
 ---
 
@@ -146,16 +153,43 @@ The workflow will warn if Quoth is unavailable but will still attempt to find do
 
 ---
 
-## Troubleshooting
+## Directory Structure
 
-Common issues and solutions:
+```
+quolar/
+├── .claude-plugin/
+│   ├── plugin.json          # Plugin manifest
+│   └── marketplace.json     # Marketplace entry
+├── skills/
+│   ├── test-ticket/
+│   │   ├── SKILL.md         # Main skill documentation
+│   │   ├── reference.md     # Configuration reference
+│   │   ├── troubleshooting.md
+│   │   ├── references/      # Detailed documentation
+│   │   ├── steps/           # 7-step workflow guides
+│   │   └── scripts/         # Utility scripts
+│   └── quolar-setup/
+│       ├── SKILL.md         # Setup wizard
+│       └── references/      # MCP setup, troubleshooting
+├── commands/
+│   ├── test-ticket.md       # Command routing
+│   └── setup.md
+├── agents/
+│   ├── test-healer.md       # Auto-heal agent
+│   └── failure-classifier.md # Classification agent
+└── packages/                # Core implementation
+```
+
+---
+
+## Troubleshooting
 
 | Error | Solution |
 |-------|----------|
 | Linear MCP not connected | Add to config with LINEAR_API_KEY |
-| Quoth MCP not connected | Run `claude mcp add --transport http quoth https://quoth.ai-innovation.site/api/mcp` |
-| Linear 401 Unauthorized | Verify LINEAR_API_KEY is valid |
-| Playwright not found | Run `npm install -D @playwright/test && npx playwright install` |
+| Quoth MCP not connected | `claude mcp add --transport http quoth https://quoth.ai-innovation.site/api/mcp` |
+| 401 Unauthorized | Verify LINEAR_API_KEY is valid |
+| Playwright not found | `npm install -D @playwright/test && npx playwright install` |
 
 See [skills/test-ticket/troubleshooting.md](./skills/test-ticket/troubleshooting.md) for detailed troubleshooting.
 
@@ -163,8 +197,10 @@ See [skills/test-ticket/troubleshooting.md](./skills/test-ticket/troubleshooting
 
 ## Documentation
 
-- **[Complete Analysis & Documentation](./docs/QUOLAR-COMPLETE-ANALYSIS.md)** - Comprehensive single-source-of-truth for all Quolar details
-- **Test Ticket Workflow**: [skills/test-ticket/SKILL.md](./skills/test-ticket/SKILL.md)
-- **Setup Wizard**: [skills/quolar-setup/SKILL.md](./skills/quolar-setup/SKILL.md)
-- **Configuration Reference**: [skills/test-ticket/reference.md](./skills/test-ticket/reference.md)
-- **Step-by-Step Guides**: [skills/test-ticket/steps/](./skills/test-ticket/steps/)
+| Document | Purpose |
+|----------|---------|
+| [skills/test-ticket/SKILL.md](./skills/test-ticket/SKILL.md) | Main workflow documentation |
+| [skills/quolar-setup/SKILL.md](./skills/quolar-setup/SKILL.md) | Setup wizard guide |
+| [skills/test-ticket/reference.md](./skills/test-ticket/reference.md) | Full configuration schema |
+| [skills/test-ticket/steps/](./skills/test-ticket/steps/) | Step-by-step guides |
+| [docs/QUOLAR-COMPLETE-ANALYSIS.md](./docs/QUOLAR-COMPLETE-ANALYSIS.md) | Comprehensive analysis |
